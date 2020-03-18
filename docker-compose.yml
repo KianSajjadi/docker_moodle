@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  mahara:
+    build: ./docker/mahara
+    ports:
+      - "80:80"
+    volumes:
+      - ./siteroot:/siteroot
+  db:
+    image: postgres:9.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mahara
+      POSTGRES_USER: mahara_user
+    volumes:
+      - 'db:/var/lib/postgresql'
+  test-db:
+    image: postgres:9.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mahara
+      POSTGRES_USER: mahara_user
+    volumes:
+      - 'testdb:/var/lib/postgresql'
+volumes:
+    db:
+    testdb:
